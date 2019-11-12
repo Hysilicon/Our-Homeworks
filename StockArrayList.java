@@ -1,11 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package lab9;
+package lab8;
+
+import static lab8.StockArrayList.stocklist;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -13,90 +11,150 @@ import java.util.ArrayList;
  */
 public class StockArrayList {
 
-    private String Ticker;
-    private String Date;
-    private double Open;
-    private double High;
-    private double Low;
-    private double Close;
-    private int Volume;//Just test for static variable...
+	private String Ticker;
+	private String Date;
+	private double Open;
+	private double High;
+	private double Low;
+	private double Close;
+	private int Volume;
 
-    public StockArrayList() {
 
-    }
-    static ArrayList stocklist = new ArrayList();
 
-    // Create constructors with parameters
-    public StockArrayList(String Ticker, String Date, double Open, double High, double Low, double Close, int Volume) {
-        super();
-        this.Ticker = Ticker;
-        this.Date = Date;
-        this.Open = Open;
-        this.High = High;
-        this.Low = Low;
-        this.Close = Close;
-        this.Volume = Volume;
+	static ArrayList<StockArrayList> stocklist = new ArrayList<StockArrayList>();
 
-        stocklist.add(this);
-    }
+	// Create constructors with parameters
+	public StockArrayList(String Ticker, String Date, double Open, double High, double Low, double Close, int Volume) {
+		super();
+		this.Ticker = Ticker;
+		this.Date = Date;
+		this.Open = Open;
+		this.High = High;
+		this.Low = Low;
+		this.Close = Close;
+		this.Volume = Volume;
 
-    // Doing getters and setters to set up encapsulation works!!!
-    // In NetBeans, use"insert codes" for getters and setters
-    public String getTicker() {
-        return Ticker;
-    }
+		//stocklist.add(this)
+	}
 
-    public String getDate() {
-        return Date;
-    }
+	// Doing getters and setters to set up encapsulation works!!!
+	// In NetBeans, use"insert codes" for getters and setters
+	public String getTicker() {
+		return Ticker;
+	}
 
-    public double getOpen() {
-        return Open;
-    }
+	public String getDate() {
+		return Date;
+	}
 
-    public double getHigh() {
-        return High;
-    }
+	public double getOpen() {
+		return Open;
+	}
 
-    public double getLow() {
-        return Low;
-    }
+	public double getHigh() {
+		return High;
+	}
 
-    public double getClose() {
-        return Close;
-    }
+	public double getLow() {
+		return Low;
+	}
 
-    public int getVolume() {
-        return Volume;
-    }
+	public double getClose() {
+		return Close;
+	}
 
-    @Override
-    public String toString() {
-        return "Stock:ticker=" + Ticker + ", date=" + Date + ", opening price=" + Open + ", closing price=" + Close
-                + ", high=" + High + ", low=" + Low + ", volume=" + Volume;
-    }
+	public int getVolume() {
+		return Volume;
+	}
 
-    public static void DisplayStocks() {
 
-        System.out.println("*******************************");
 
-        for (int i = 0; i < stocklist.size(); i++) {
-            System.out.println(stocklist.get(i).toString());
+	@Override
+	public String toString() {
+		return "Stock:ticker=" + Ticker + ", date=" + Date + ", opening price=" + Open + ", closing price=" + Close
+				+ ", high=" + High + ", low=" + Low + ", volume=" + Volume;
+	}
 
-        }
-    }
+	public static void DisplayStocks() {
 
-    public boolean equals(StockArrayList stocklist) {
-        if (stocklist == null) {
-            return false;
-        }else{
-            if(stocklist.getDate().equals(this.getDate())){
-            return true;
-        }else{
-                return false;
-            }
-        }
-    }
+		System.out.println("*******************************");
 
-   
-}
+		for (int i = 0; i < stocklist.size(); i++) {
+			System.out.println(stocklist.get(i).toString());
+
+		}
+	}
+
+	public static void searchDate(ArrayList<StockArrayList> stocklist, String Date) {
+		boolean flag = false;
+
+		System.out.println("Searching for " + Date);
+
+		for (int p = 0; p < stocklist.size(); p++) {
+
+			if (stocklist.get(p).getDate().equals(Date)) {
+				flag = true;
+				break;
+			} // break instruction must in the bracket !!!!!!!!!!
+
+		}
+		if (flag) {
+			System.out.println("Date Found at: " + Date);
+
+		} else {
+			System.out.println("Date not found for " + Date);
+		}
+
+	}
+
+	public boolean equals(StockArrayList comp) {
+		if (!this.Ticker.equals(comp.getTicker())) {
+			return false;
+		}
+		if (!this.Date.equals(comp.getDate())) {
+			return false;
+		}
+		if (this.Open != (comp.getOpen())) {
+			return false;
+		}
+		if (this.High != comp.getHigh()) {
+			return false;
+		}
+		if (this.Low != (comp.getLow())) {
+			return false;
+		}
+		if (this.Close != (comp.getClose())) {
+			return false;
+		}
+		if (this.Volume != comp.getVolume()) {
+			return false;
+		}
+		return true;
+	}
+
+	public static void searchMatch(ArrayList<StockArrayList> stocklist, StockArrayList comp) {
+
+		boolean flag =false;//need a flag
+
+	    Iterator<StockArrayList> it = stocklist.iterator();//Iterator
+		while (it.hasNext()) {
+			StockArrayList st = it.next();
+			if ((st.equals(comp))) {
+				it.remove();
+				flag = true;
+				
+			}
+
+		}
+
+		if (flag) {
+			System.out.println("Match found, remove from the list");
+
+		} else {
+
+			System.out.println("Not found");
+
+		}
+		 System.out.println("The array list size is "+stocklist.size());
+	}
+	}
